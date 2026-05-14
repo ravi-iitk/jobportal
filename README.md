@@ -92,7 +92,59 @@ docker-compose up --build
 - `PUT /api/v1/applicants/:id/notes`
 - `DELETE /api/v1/applicants/:id`
 
-## Deployment to Netlify
+## Deployment to Railway (backend)
+
+### 1. Database Setup
+- Use MongoDB Atlas or Railway MongoDB plugin
+- If using Atlas, get the connection string and set `MONGO_URI`
+
+### 2. Railway Setup
+1. Go to [Railway](https://railway.app)
+2. Create a new project
+3. Connect your GitHub account and choose `ravi-iitk/jobportal`
+4. Set the project root/folder to `server`
+5. Railway will detect the Node app, or use these settings:
+   - **Build command**: `npm install`
+   - **Start command**: `npm start`
+
+### 3. Environment variables for Railway
+Set these in Railway project settings:
+```env
+MONGO_URI=mongodb+srv://username:<password>@cluster0.mongodb.net/your-db-name?retryWrites=true&w=majority
+JWT_SECRET=super_secure_random_jwt_secret_1234567890
+JWT_EXPIRES_IN=7d
+CLIENT_ORIGIN=http://localhost:3000
+NODE_ENV=production
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-gmail-app-password
+EMAIL_FROM=your-email@gmail.com
+SMTP_SECURE=false
+```
+- If you are testing the frontend locally, use `CLIENT_ORIGIN=http://localhost:3000`
+- If your frontend is deployed later, update `CLIENT_ORIGIN` to that site URL
+
+### 4. Why CLIENT_ORIGIN matters
+This value must match the URL of the app calling the backend.
+- Local frontend: `http://localhost:3000`
+- Deployed frontend: `https://your-site.netlify.app`
+
+### 5. JWT secret advice
+Use a long random string. Example:
+```text
+super_secure_random_jwt_secret_2026_!@#$%^&*()_abc123
+```
+Do not use simple phrases like `my_super_secret_key_12345` in production.
+
+### 6. After deployment
+- Open Railway project logs to confirm the server started
+- Use the Railway app URL in your frontend API calls if the backend is deployed
+- If login/signup still fail, check the Railway logs for missing env or database errors
+
+---
+
+## Deployment to Netlify (frontend)
 
 ### 1. Database Setup
 - Create a MongoDB Atlas cluster
