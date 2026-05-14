@@ -84,10 +84,46 @@ docker-compose up --build
 - `PUT /api/v1/applicants/:id/notes`
 - `DELETE /api/v1/applicants/:id`
 
-## Deployment
+## Deployment to Netlify
 
-- Frontend: Vercel
-- Backend: Render/Railway
-- Database: MongoDB Atlas
+### 1. Database Setup
+- Create a MongoDB Atlas cluster
+- Get the connection string (replace `<password>` with your password)
 
-Set environment variables on each platform before deploying.
+### 2. GitHub Setup
+- Code is already pushed to: https://github.com/ravi-iitk/jobportal
+
+### 3. Netlify Deployment
+1. Go to [Netlify](https://netlify.com)
+2. Click "New site from Git"
+3. Connect your GitHub account and select the `jobportal` repo
+4. Build settings:
+   - **Build command**: `cd client && npm run build`
+   - **Publish directory**: `client/dist`
+   - **Node version**: 18
+5. Environment variables (in Netlify dashboard > Site settings > Environment variables):
+   ```
+   MONGO_URI=mongodb+srv://username:<password>@cluster.mongodb.net/jobportal?retryWrites=true&w=majority
+   JWT_SECRET=your_long_random_secret_here
+   JWT_EXPIRES_IN=7d
+   CLIENT_ORIGIN=https://your-netlify-site.netlify.app
+   NODE_ENV=production
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USER=your-email@gmail.com
+   SMTP_PASS=your-app-password
+   EMAIL_FROM=your-email@gmail.com
+   ```
+6. Deploy!
+
+### 4. MongoDB Atlas Setup
+- Create database user
+- Whitelist IP: `0.0.0.0/0` for Netlify functions
+- Get connection string from Atlas dashboard
+
+### 5. Gmail SMTP (for OTP emails)
+- Enable 2FA on Gmail
+- Generate App Password: Google Account > Security > App passwords
+- Use the app password in SMTP_PASS (not your regular password)
+
+The app will be live at your Netlify URL with all functionalities intact!
