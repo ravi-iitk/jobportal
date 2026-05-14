@@ -1,0 +1,126 @@
+[build]
+  publish = "client/dist"
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/v1/auth/login"
+  to = "/.netlify/functions/auth-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/v1/auth/signup"
+  to = "/.netlify/functions/auth-signup-request-otp"
+  status = 200
+
+[[redirects]]
+  from = "/api/v1/auth/signup/request-otp"
+  to = "/.netlify/functions/auth-signup-request-otp"
+  status = 200
+
+[[redirects]]
+  from = "/api/v1/auth/signup/verify-otp"
+  to = "/.netlify/functions/auth-signup-verify-otp"
+  status = 200
+
+[[redirects]]
+  from = "/api/v1/auth/me"
+  to = "/.netlify/functions/auth-me"
+  status = 200
+
+[[redirects]]
+  from = "/api/v1/auth/me"
+  to = "/.netlify/functions/auth-me-update"
+  status = 200
+  conditions = {Method = ["PUT"]}
+
+[[redirects]]
+  from = "/api/v1/jobs"
+  to = "/.netlify/functions/jobs-list"
+  status = 200
+  conditions = {Method = ["GET"]}
+
+[[redirects]]
+  from = "/api/v1/jobs"
+  to = "/.netlify/functions/jobs-create"
+  status = 200
+  conditions = {Method = ["POST"]}
+
+[[redirects]]
+  from = "/api/v1/jobs/stats/dashboard"
+  to = "/.netlify/functions/jobs-stats-dashboard"
+  status = 200
+
+[[redirects]]
+  from = "/api/v1/jobs/*"
+  to = "/.netlify/functions/jobs-get"
+  status = 200
+  conditions = {Method = ["GET"]}
+
+[[redirects]]
+  from = "/api/v1/jobs/*"
+  to = "/.netlify/functions/jobs-update"
+  status = 200
+  conditions = {Method = ["PUT"]}
+
+[[redirects]]
+  from = "/api/v1/jobs/*/status"
+  to = "/.netlify/functions/jobs-status"
+  status = 200
+  conditions = {Method = ["PATCH"]}
+
+[[redirects]]
+  from = "/api/v1/jobs/*"
+  to = "/.netlify/functions/jobs-delete"
+  status = 200
+  conditions = {Method = ["DELETE"]}
+
+[[redirects]]
+  from = "/api/v1/applicants"
+  to = "/.netlify/functions/applicants-list"
+  status = 200
+
+[[redirects]]
+  from = "/api/v1/applicants/job/*"
+  to = "/.netlify/functions/applicants-list-by-job"
+  status = 200
+  conditions = {Method = ["GET"]}
+
+[[redirects]]
+  from = "/api/v1/applicants/job/*"
+  to = "/.netlify/functions/applicants-create"
+  status = 200
+  conditions = {Method = ["POST"]}
+
+[[redirects]]
+  from = "/api/v1/applicants/*"
+  to = "/.netlify/functions/applicants-get"
+  status = 200
+  conditions = {Method = ["GET"]}
+
+[[redirects]]
+  from = "/api/v1/applicants/*/status"
+  to = "/.netlify/functions/applicants-status"
+  status = 200
+  conditions = {Method = ["PATCH"]}
+
+[[redirects]]
+  from = "/api/v1/applicants/*/notes"
+  to = "/.netlify/functions/applicants-notes"
+  status = 200
+  conditions = {Method = ["PUT"]}
+
+[[redirects]]
+  from = "/api/v1/applicants/*"
+  to = "/.netlify/functions/applicants-delete"
+  status = 200
+  conditions = {Method = ["DELETE"]}
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS, PATCH"
