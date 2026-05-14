@@ -35,6 +35,8 @@ CLIENT_ORIGIN=http://localhost:3000
 NODE_ENV=development
 ```
 
+> Note: `.env` files are excluded from Git. Use `server/.env.example` and `client/.env.example` as templates.
+
 ### 2. Frontend
 
 ```bash
@@ -42,6 +44,12 @@ cd client
 cp .env.example .env
 npm install
 npm run dev
+```
+
+Edit `client/.env` if needed:
+
+```env
+VITE_API_BASE_URL=http://localhost:5000/api/v1
 ```
 
 Frontend: http://localhost:3000  
